@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build . -t ashutosh_jha/sso:v1 
+        run: docker build . -t ashu26jha/ashutosh_jha/sso:v1 
 
       - name: Push Docker Image
         run: docker push ashu26jha/ashutosh_jha/sso:v1
