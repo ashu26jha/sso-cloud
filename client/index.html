@@ -7,15 +7,16 @@
     <title>Google OAuth2</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #e3f2fd;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+            color: #444;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #0d47a1;
             margin-top: 50px;
         }
 
@@ -25,66 +26,24 @@
             margin-top: 20px;
             text-decoration: none;
             color: #007bff;
-        }
-
-        .form-container {
-            width: 50%;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+            background-color: white;
+            padding: 10px 20px;
             border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            margin: auto;
+            transition: background-color 0.3s;
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-
-        p {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        p a {
-            color: #007bff;
+        a:hover {
+            background-color: #0d47a1;
+            color: white;
             text-decoration: none;
         }
-
-        p a:hover {
-            text-decoration: underline;
-        }
     </style>
-
 </head>
 <body>
-    <h1>Google Oauth 2 with Passportjs</h1>
+    <h1>Google OAuth 2 with Passport.js</h1>
     <a href="/auth/google">Login with Google</a>
 </body>
 </html>

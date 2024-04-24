@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #e3f2fd;
+            margin: 0;
+            padding: 20px;
+            color: #444;
+        }
+
+        h1 {
+            color: #0d47a1;
+            text-align: center;
+        }
+
+        form,
+        .weather-container,
+        .address-container {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+            margin-top: 20px;
+            max-width: 400px;
+            /* Limiting width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="text"],
+        button {
+            padding: 10px;
+            margin: 8px -11px;
+            display: block;
+            width: 100%;
+            font-size: 16px;
+            border: 2px solid #0d47a1;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            margin:auto;
+            width: 30%;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0d47a1;
+            transform: scale(1.05);
+        }
+
+        #weather {
+            text-align: center;
+        }
+
+        .weather-info {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        span {
+            font-weight: bold;
+            color: #0d47a1;
+        }
+
+        .address-container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome, <span id="userName">
+            <%= name %>
+        </span>!</h1>
+
+    <!-- Weather and Address Input Form -->
+    <form id="weatherForm">
+        <input type="text" id="cityInput" placeholder="Enter a city">
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <!-- Address Saving Section -->
+    <div class="address-container">
+        <input type="text" id="homeInput" placeholder="Enter home address">
+        <button type="button" onclick="saveAddress('home')">Save Home Address</button>
+        <input type="text" id="workInput" placeholder="Enter work address">
+        <button type="button" onclick="saveAddress('work')">Save Work Address</button>
+    </div>
+
+    <div id="weather" class="weather-container">
+        <h2>Weather Information</h2>
+        <p class="weather-info">Temperature: <span id="temperature"></span>°C</p>
+        <p class="weather-info">Description: <span id="description"></span></p>
+    </div>
+
+    <button type="button" id="homeWeather">Home Weather</button>
+    <button type="button" id="workWeather">Work Weather</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#weatherForm').on('submit', function (e) {
+                e.preventDefault();
+                const city = $('#cityInput').val();
+                getWeather(city);
+            });
+
+            $('#homeWeather').click(function () {
+                getWeatherForAddressType('home');
+            });
+
+            $('#workWeather').click(function () {
+                getWeatherForAddressType('work');
+            });
+        });
+
+        function getWeather(city) {
+            $.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=02ba57138ebb8d205b0e6fd76c905580&units=metric`, function (data) {
+                $('#temperature').text(data.main.temp);
+                $('#description').text(data.weather[0].description);
+            }).fail(function () {
+                alert('Weather data not found for this city.');
+            });
+        }
+
+        function getWeatherForAddressType(type) {
+            const userName = $('#userName').text();
+            const userAddresses = JSON.parse(localStorage.getItem(userName)) || {};
+            const address = userAddresses[type + 'Address'];
+            if (address) {
+                getWeather(address);
+            } else {
+                alert(`No ${type} address found. Please enter and save it first.`);
+            }
+        }
+
+        function saveAddress(type) {
+            const userName = $('#userName').text();
+            const address = $('#' + type + 'Input').val();
+            if (address) {
+                const userAddresses = JSON.parse(localStorage.getItem(userName)) || {};
+                userAddresses[type + 'Address'] = address;
+                localStorage.setItem(userName, JSON.stringify(userAddresses));
+                alert(type.charAt(0).toUpperCase() + type.slice(1) + ' address saved!');
+            } else {
+                alert('Please enter an address to save.');
+            }
+        }
+    </script>
+</body>
+
+</html>
