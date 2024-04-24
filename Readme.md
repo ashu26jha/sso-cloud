@@ -1,6 +1,6 @@
 # SSO Based weather app
 
-First of we all, we will populate the environment variables. 
+First of we all, we will populate the environment variables
 
 There are two ways to run the project:
 
